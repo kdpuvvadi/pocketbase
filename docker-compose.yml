@@ -1,0 +1,15 @@
+---
+version: "3"
+
+services:
+  pocketbase:
+    image: kdpuvvadi/pocketbase:latest
+    container_name: pocketbase
+    volumes:
+      - pocketbase:/usr/src/app
+    ports:
+      - 8090:8090
+    restart: unless-stopped
+
+volumes:
+  pocketbase:

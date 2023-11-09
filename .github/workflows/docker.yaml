@@ -1,0 +1,50 @@
+name: Deploy images to Docker
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    env:
+      DOCKER_FILE: Dockerfile
+      VERSION: '0.19.3'
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4.1.1
+
+      - name: Set up QEMU
+        uses: docker/setup-qemu-action@v3.0.0
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3.0.0
+
+      - name: Log into registry github
+        uses: docker/login-action@v3.0.0
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Login to Docker Hub
+        uses: docker/login-action@v1
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+
+      - name: Build and push to registry
+        uses: docker/build-push-action@v5.0.0
+        with:
+          context: .
+          file: ${{ env.DOCKER_FILE }}
+          platforms: linux/amd64,linux/arm/v7,linux/arm64
+          push: true
+          build-args: |
+            VERSION=${{ env.VERSION }}
+          tags: |
+            ghcr.io/${{ github.repository }}:${{ env.VERSION }}
+            ghcr.io/${{ github.repository }}:latest
+            ${{ github.repository }}:${{ env.VERSION }}
+            ${{ github.repository }}:latest
