@@ -1,12 +1,19 @@
-# fly.toml app configuration file generated for stations on 2023-11-09T17:14:25+05:30
+# fly.toml app configuration file generated for e-station on 2023-11-10T10:12:43+05:30
 #
 # See https://fly.io/docs/reference/configuration/ for information about how to use this file.
 #
 
-app = "stations"
+app = "e-station"
 primary_region = "sin"
 
 [build]
+  dockerfile = "Dockerfile"
+  [build.args]
+    VERSION = "0.19.3"
+
+[mounts]
+  source = "pocketbase"
+  destination = "/usr/src/app"
 
 [http_service]
   internal_port = 8090
