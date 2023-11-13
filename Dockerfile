@@ -9,7 +9,7 @@ WORKDIR /usr/src/app
 RUN apk --no-cache upgrade --purge
 RUN apk --no-cache add zip ca-certificates
 
-ARG VERSION=0.19.3
+ARG VERSION=0.19.4
 ARG TARGETPLATFORM
 RUN if [ "$TARGETPLATFORM" = "linux/amd64" ]; then ARCH=amd64; \
   elif [ "$TARGETPLATFORM" = "linux/arm/v7" ]; then ARCH=armv7; \
