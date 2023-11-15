@@ -6,10 +6,13 @@ services:
     image: kdpuvvadi/pocketbase:latest
     container_name: pocketbase
     volumes:
-      - pocketbase:/usr/src/app
+      # use either volumes of bind mounts to store the data
+      # - pocketbase:/usr/src/app/pb_data
+      - ./pb_data:/usr/src/app/pb_data
     ports:
       - 8090:8090
     restart: unless-stopped
 
-volumes:
-  pocketbase:
+# uncomment this to use volume
+# volumes:
+#   pocketbase:
