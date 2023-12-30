@@ -4,6 +4,14 @@
 
 ## deploy
 
+### Quick run
+
+```shell
+docker run -v ./pb_data:/usr/src/app/pb_data --name pocketbase -p 8090:8090 kdpuvvadi/pocketbase:latest 
+```
+
+### With compose
+
 ```shell
 git clone https://github.com/kdpuvvadi/pocketbase.git pocketbase
 docker compose up -d
