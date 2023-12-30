@@ -3,6 +3,9 @@ version: "3"
 
 services:
   pocketbase:
+    build:
+      context: .
+      dockerfile: Dockerfile
     image: kdpuvvadi/pocketbase:latest
     container_name: pocketbase
     volumes:
