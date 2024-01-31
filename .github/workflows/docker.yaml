@@ -2,12 +2,14 @@ name: Deploy images to Docker
 
 on:
   workflow_dispatch:
-  push:
-    branches: [main]
-    paths:
-      - 'Dockerfile'
-      - '**.yml'
-      - '.github/workflows/**'
+  release:
+    types: [published]
+  # push:
+  #   branches: [main]
+  #   paths:
+  #     - 'Dockerfile'
+  #     - '**.yml'
+  #     - '.github/workflows/**'
 
 jobs:
   build:
