@@ -1,6 +1,6 @@
 # pocketbase docker image
 
-> Unofficial pocketbase docker image for my testing environment. Not Ready for production.
+> Unofficial [pocketbase](https://github.com/pocketbase/pocketbase) docker image for my testing environment. Not Ready for production.
 
 ## deploy
 
