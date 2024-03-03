@@ -6,9 +6,6 @@ LABEL org.opencontainers.image.licenses=MIT
 ENV ARCH $ARCH
 WORKDIR /usr/src/app
 
-RUN apk --no-cache upgrade --purge
-RUN apk --no-cache add zip ca-certificates
-
 ARG VERSION=0.22.1
 ARG TARGETPLATFORM
 RUN if [ "$TARGETPLATFORM" = "linux/amd64" ]; then ARCH=amd64; \
