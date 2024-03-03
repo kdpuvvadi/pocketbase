@@ -1,14 +1,17 @@
-# pocketbase docker image
+# PocketBase docker image
 
-> Unofficial [pocketbase](https://github.com/pocketbase/pocketbase) docker image for my testing environment. Not Ready for production.
+> Unofficial [PocketBase](https://github.com/pocketbase/pocketbase) docker image for my testing environment. Not Ready for production.
+
+![](https://img.shields.io/github/v/release/kdpuvvadi/pocketbase?color=success&display_name=tag&label=docker&logo=docker)
+![](https://img.shields.io/github/v/release/pocketbase/pocketbase?color=success&display_name=tag&label=pocketbase&logo=pocketbase)
 
 # builds
 
-| arch   | Latest  | 
-|--------|---------|
-| amd64  | &check; |
-| arm64  | &check; |
-| armv7  | &check; |
+|  arch  |  Support  |
+| :----: | :-------: |
+| amd64  |   &check; |
+| arm64  |   &check; |
+| armv7  |   &check; |
 
 ## deploy
 
