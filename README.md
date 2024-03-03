@@ -2,6 +2,14 @@
 
 > Unofficial [pocketbase](https://github.com/pocketbase/pocketbase) docker image for my testing environment. Not Ready for production.
 
+# builds
+
+| arch   | Latest  | 
+|--------|---------|
+| amd64  | &check; |
+| arm64  | &check; |
+| armv7  | &check; |
+
 ## deploy
 
 ### Quick run
@@ -19,7 +27,7 @@ docker compose up -d
 
 ### docker compose
 
-```docker-compose.yml
+```docker-compose.yaml
 ---
 version: "3"
 
@@ -37,7 +45,7 @@ services:
 
 ### docker compose with volumes
 
-```yml
+```docker-compose.yaml
 ---
 version: "3"
 
