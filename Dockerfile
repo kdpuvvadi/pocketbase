@@ -6,7 +6,7 @@ LABEL org.opencontainers.image.licenses=MIT
 ENV ARCH $ARCH
 WORKDIR /usr/src/app
 
-ARG VERSION=0.22.2
+ARG VERSION=0.22.3
 ARG TARGETPLATFORM
 RUN if [ "$TARGETPLATFORM" = "linux/amd64" ]; then ARCH=amd64; \
   elif [ "$TARGETPLATFORM" = "linux/arm/v7" ]; then ARCH=armv7; \
