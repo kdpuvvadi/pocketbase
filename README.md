@@ -32,7 +32,6 @@ docker compose up -d
 
 ```docker-compose.yaml
 ---
-version: "3"
 
 services:
   pocketbase:
@@ -50,7 +49,6 @@ services:
 
 ```docker-compose.yaml
 ---
-version: "3"
 
 services:
   pocketbase:
