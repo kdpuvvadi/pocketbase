@@ -54,3 +54,5 @@ jobs:
             ghcr.io/${{ github.repository }}:latest
             ${{ github.repository }}:${{ env.VERSION }}
             ${{ github.repository }}:latest
+          cache-from: type=registry,ref=${{ github.repository	}}:latest
+          cache-to: type=inline

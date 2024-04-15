@@ -45,3 +45,5 @@ jobs:
           tags: |
             git.local.puvvadi.net/kd/pocketbase:${{ env.VERSION }}
             git.local.puvvadi.net/kd/pocketbase:latest
+          cache-from: type=registry,ref=${{ github.repository	}}:latest
+          cache-to: type=inline
