@@ -1,12 +1,15 @@
 FROM ghcr.io/kdpuvvadi/alpine:latest
-LABEL org.opencontainers.image.source = "https://github.com/kdpuvvadi/pocketbase"
-LABEL org.opencontainers.image.description="pocketbase"
-LABEL org.opencontainers.image.licenses=MIT
+LABEL org.opencontainers.image.title="pocketbase"
+LABEL org.opencontainers.image.authors="KD Puvvadi <kd@puvvadi.me>"
+LABEL org.opencontainers.image.source="https://github.com/kdpuvvadi/pocketbase"
+LABEL org.opencontainers.image.description="Docker image for deploying pocketbase Service"
+LABEL org.opencontainers.image.licenses="MIT"
 
 ENV ARCH $ARCH
 WORKDIR /usr/src/app
 
 ARG VERSION=0.22.11
+LABEL org.opencontainers.image.version=${VERSION}
 ARG TARGETPLATFORM
 RUN if [ "$TARGETPLATFORM" = "linux/amd64" ]; then ARCH=amd64; \
   elif [ "$TARGETPLATFORM" = "linux/arm/v7" ]; then ARCH=armv7; \
