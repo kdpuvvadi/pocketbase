@@ -5,7 +5,7 @@ LABEL org.opencontainers.image.source="https://github.com/kdpuvvadi/pocketbase"
 LABEL org.opencontainers.image.description="Docker image for deploying pocketbase Service"
 LABEL org.opencontainers.image.licenses="MIT"
 
-ENV ARCH $ARCH
+ENV ARCH=$(ARCH)
 WORKDIR /usr/src/app
 
 ARG VERSION=0.23.2
@@ -22,4 +22,4 @@ RUN if [ "$TARGETPLATFORM" = "linux/amd64" ]; then ARCH=amd64; \
 
 EXPOSE 8090
 
-CMD ["/usr/src/app/pocketbase", "serve", "--http", "0.0.0.0:8090"]
+ENTRYPOINT ["/usr/src/app/pocketbase", "serve", "--http", "0.0.0.0:8090", "--dir", "/usr/src/app/pb_data", "--publicDir", "/usr/src/app/pb_public", "--hooksDir", "/usr/src/app/pb_hooks" ]
