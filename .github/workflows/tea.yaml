@@ -10,7 +10,7 @@ jobs:
     runs-on: self-hosted
     env:
       DOCKER_FILE: Dockerfile
-      VERSION: '0.23.4'
+      VERSION: '0.23.5'
     steps:
       - name: Checkout
         uses: actions/checkout@v4.1.1
