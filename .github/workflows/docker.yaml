@@ -16,7 +16,7 @@ jobs:
     runs-on: ubuntu-latest
     env:
       DOCKER_FILE: Dockerfile
-      VERSION: '0.26.6'
+      VERSION: '0.27.0'
     steps:
       - name: Checkout
         uses: actions/checkout@v4.1.1
