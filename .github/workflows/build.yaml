@@ -1,4 +1,4 @@
-name: Relase on pocketbase/release
+name: Releases on pocketbase/release
 on:
   schedule:
     - cron: "0 * * * *"
@@ -79,11 +79,11 @@ jobs:
           username: ${{ github.repository_owner }}
           password: ${{ secrets.GITHUB_TOKEN }}
       
-      - name: Login to ghcr
+      - name: Login to docker
         uses: docker/login-action@v3
         with:
           registry: ghcr.io
-          username: ${{ github.DOCKERHUB_USERNAME }}
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
 
       - name: Get version from needs or input
