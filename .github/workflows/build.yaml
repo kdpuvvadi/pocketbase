@@ -41,10 +41,9 @@ jobs:
         uses: actions/github-script@v7
         env:
           PACKAGE_NAME: pocketbase
-          PACKAGE_TYPE: pocketbase
+          PACKAGE_TYPE: container
         with:
           result-encoding: string
-          github-token: ${{ secrets.GITHUB_TOKEN }}
           script: |
             const {PACKAGE_NAME,PACKAGE_TYPE} = process.env;
             const {data: packages} = await github.rest.packages.getAllPackageVersionsForPackageOwnedByOrg({
@@ -58,7 +57,6 @@ jobs:
             )[0];
 
             return latest.metadata.container.tags.find((v) => /^v?\d+\.\d+\.\d+$/.test(v)) || '0.0.0'
-
   release:
     runs-on: ubuntu-latest
     needs: check
