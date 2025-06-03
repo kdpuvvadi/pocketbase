@@ -16,7 +16,8 @@
 
 ## Docs 
 
-Checkout the docs at https://pocketbase.io/docs/
+Checkout the docs at https://pocketbase.io/docs/ or [here](https://puvvadi.net/posts/deploy-pocketbase-with-docker-behind-traefik/
+)
 
 ## deploy
 
@@ -86,4 +87,4 @@ networks:
 
 ## Support
 
-If you encounter any issue with the images, feel free to reach out with issue or a PR.
+If you encounter any issue with the images, feel free to reach out with an issue or a PR.
