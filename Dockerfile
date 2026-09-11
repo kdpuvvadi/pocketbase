@@ -1,7 +1,10 @@
 FROM ghcr.io/kdpuvvadi/alpine:latest
 LABEL org.opencontainers.image.title="pocketbase"
 LABEL org.opencontainers.image.authors="KD Puvvadi <kd@puvvadi.me>"
+LABEL org.opencontainers.image.vendor="KD Puvvadi"
+LABEL org.opencontainers.image.url="https://github.com/kdpuvvadi/pocketbase"
 LABEL org.opencontainers.image.source="https://github.com/kdpuvvadi/pocketbase"
+LABEL org.opencontainers.image.documentation="https://puvvadi.net/posts/deploy-pocketbase-with-docker-behind-traefik/"
 LABEL org.opencontainers.image.description="Docker image for deploying pocketbase Service"
 LABEL org.opencontainers.image.licenses="MIT"
 
