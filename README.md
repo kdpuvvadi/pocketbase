@@ -13,20 +13,19 @@
 | amd64  |   &check; |
 | arm64  |   &check; |
 
-## Docs 
+## Docs
 
-Checkout the docs at https://pocketbase.io/docs/ or [here](https://puvvadi.net/posts/deploy-pocketbase-with-docker-behind-traefik/
-)
+Checkout the docs at https://pocketbase.io/docs/ or [here](https://puvvadi.net/posts/deploy-pocketbase-with-docker-behind-traefik/)
 
 ## deploy
 
 ### Quick run
 
 ```shell
-docker run -v ./pb_data:/usr/src/app/pb_data --name pocketbase -p 8090:8090 kdpuvvadi/pocketbase:latest 
+docker run -v ./pb_data:/usr/src/app/pb_data --name pocketbase -p 8090:8090 ghcr.io/kdpuvvadi/pocketbase:latest
 ```
 
-Pocketbase's admin UI will be avaiable at `<ip>:8090/_/` and API at `<ip>:8090/api/`
+Pocketbase's admin UI will be available at `<ip>:8090/_/` and API at `<ip>:8090/api/`
 
 ### With compose
 
@@ -37,7 +36,7 @@ docker compose up -d
 
 ## Production ready setup
 
-It is [recommended](https://pocketbase.io/docs/going-to-production/#enable-settings-encryption) to use encryption for storing settings. Generate 32 charector random string with the following
+It is [recommended](https://pocketbase.io/docs/going-to-production/#enable-settings-encryption) to use encryption for storing settings. Generate 32 character random string with the following
 
 ```shell
 openssl rand -hex 16
@@ -81,7 +80,7 @@ services:
 
 networks:
   proxy: # replace it based on your setup
-    external: true 
+    external: true
 ```
 
 ## Support
