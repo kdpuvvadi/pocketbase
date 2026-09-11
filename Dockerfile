@@ -16,7 +16,6 @@ ARG VERSION=0.40.3
 LABEL org.opencontainers.image.version=${VERSION}
 ARG TARGETPLATFORM
 RUN if [ "$TARGETPLATFORM" = "linux/amd64" ]; then ARCH=amd64; \
-  elif [ "$TARGETPLATFORM" = "linux/arm/v7" ]; then ARCH=armv7; \
   elif [ "$TARGETPLATFORM" = "linux/arm64" ]; then ARCH=arm64; \
   else ARCH=amd64; fi \
   && cd /usr/src/app \

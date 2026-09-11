@@ -95,8 +95,12 @@ jobs:
         with:
           images: |
             ghcr.io/kdpuvvadi/pocketbase
+            kdpuvvadi/pocketbase
           tags: |
+            type=raw,value=latest
             type=semver,pattern={{version}},value=${{ steps.version.outputs.value }}
+            type=semver,pattern={{major}}.{{minor}},value=${{ steps.version.outputs.value }}
+            type=semver,pattern={{major}},value=${{ steps.version.outputs.value }}
 
       - name: Build and push
         uses: docker/build-push-action@v7

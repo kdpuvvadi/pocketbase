@@ -12,7 +12,6 @@
 | :----: | :-------: |
 | amd64  |   &check; |
 | arm64  |   &check; |
-| armv7  |   &check; |
 
 ## Docs 
 
