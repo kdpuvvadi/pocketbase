@@ -14,6 +14,7 @@ jobs:
     outputs:
       pocketbase: ${{ steps.pocketbase.outputs.result }}
       package: ${{ steps.package.outputs.result }}
+      version: ${{ steps.version.outputs.value }}
     steps:
       - name: Get latest pocketbase release
         id: pocketbase
@@ -58,10 +59,18 @@ jobs:
             )[0];
 
             return latest.metadata.container.tags.find((v) => /^v?\d+\.\d+\.\d+$/.test(v)) || '0.0.0'
+
+      - name: Resolve release version
+        id: version
+        run: echo "value=${{ github.event.inputs.version || steps.pocketbase.outputs.result }}" >> "$GITHUB_OUTPUT"
+
   release:
     runs-on: ubuntu-latest
     needs: check
     if: (needs.check.outputs.pocketbase != needs.check.outputs.package) || github.event_name == 'workflow_dispatch'
+    permissions:
+      contents: read
+      packages: write
     steps:
       - name: Checkout
         uses: actions/checkout@v7
@@ -78,16 +87,12 @@ jobs:
           registry: ghcr.io
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
-      
+
       - name: Login to docker
         uses: docker/login-action@v4
         with:
           username: ${{ vars.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
-
-      - name: Get version from needs or input
-        id: version
-        run: echo "value=${{ github.event.inputs.version || needs.check.outputs.pocketbase }}" >> $GITHUB_OUTPUT
 
       - name: Docker meta
         id: meta
@@ -98,9 +103,9 @@ jobs:
             kdpuvvadi/pocketbase
           tags: |
             type=raw,value=latest
-            type=semver,pattern={{version}},value=${{ steps.version.outputs.value }}
-            type=semver,pattern={{major}}.{{minor}},value=${{ steps.version.outputs.value }}
-            type=semver,pattern={{major}},value=${{ steps.version.outputs.value }}
+            type=semver,pattern={{version}},value=${{ needs.check.outputs.version }}
+            type=semver,pattern={{major}}.{{minor}},value=${{ needs.check.outputs.version }}
+            type=semver,pattern={{major}},value=${{ needs.check.outputs.version }}
 
       - name: Build and push
         uses: docker/build-push-action@v7
@@ -109,9 +114,45 @@ jobs:
           push: true
           file: Dockerfile
           provenance: false
-          build-args: VERSION=${{ steps.version.outputs.value }}
+          build-args: VERSION=${{ needs.check.outputs.version }}
           platforms: linux/amd64,linux/arm64
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
           cache-from: type=gha
           cache-to: type=gha,mode=max
+
+  bump:
+    runs-on: ubuntu-latest
+    needs: check
+    if: (needs.check.outputs.pocketbase != needs.check.outputs.package) || github.event_name == 'workflow_dispatch'
+    permissions:
+      contents: write
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v7
+
+      - name: Bump Dockerfile, push branch, tag, and release
+        env:
+          VERSION: ${{ needs.check.outputs.version }}
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          set -euo pipefail
+          BRANCH="release/v${VERSION}"
+          TAG="v${VERSION}"
+
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+
+          git checkout -b "$BRANCH"
+          sed -i "s/^ARG VERSION=.*/ARG VERSION=${VERSION}/" Dockerfile
+          git add Dockerfile
+          git commit -m "chore: bump PocketBase to ${VERSION}"
+          git push -u origin "$BRANCH"
+
+          git tag "$TAG"
+          git push origin "$TAG"
+
+          gh release create "$TAG" \
+            --title "$TAG" \
+            --notes "PocketBase ${VERSION}" \
+            --target "$BRANCH"
