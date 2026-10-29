@@ -18,24 +18,38 @@ jobs:
     steps:
       - name: Get latest pocketbase release
         id: pocketbase
-        uses: actions/github-script@v9
         env:
-          OWNER: pocketbase
+          UPSTREAM: https://ganigeorgiev.com
+          PROJECT: pocketbase
           REPO: pocketbase
-          EXCLUDES: '["draft", "prerelease"]'
-        with:
-          result-encoding: string
-          script: |
-            const {OWNER,REPO,EXCLUDES} = process.env;
-            const {data} = await github.rest.repos.listReleases({
-              owner: OWNER,
-              repo: REPO
-            })
+          CHANNEL: default
+        run: |
+          set -euo pipefail
+          api="${UPSTREAM}/api/collections"
 
-            const releases = data.filter(release => JSON.parse(EXCLUDES).every(exclude => !release[exclude]))
-            const latest = releases[0]
+          project_id=$(curl -fsSL --get "${api}/projects/records" \
+            --data-urlencode "perPage=1" \
+            --data-urlencode "filter=name='${PROJECT}'" \
+            --data-urlencode "fields=id" | jq -er '.items[0].id')
 
-            return latest.tag_name.replace('v','')
+          repo_id=$(curl -fsSL --get "${api}/repositories/records" \
+            --data-urlencode "perPage=1" \
+            --data-urlencode "filter=project='${project_id}' && name='${REPO}'" \
+            --data-urlencode "fields=id" | jq -er '.items[0].id')
+
+          channel_id=$(curl -fsSL --get "${api}/channels/records" \
+            --data-urlencode "perPage=1" \
+            --data-urlencode "filter=repository='${repo_id}' && name='${CHANNEL}'" \
+            --data-urlencode "fields=id" | jq -er '.items[0].id')
+
+          tag=$(curl -fsSL --get "${api}/releases/records" \
+            --data-urlencode "perPage=20" \
+            --data-urlencode "sort=-semver" \
+            --data-urlencode "filter=channel='${channel_id}' && draft=false" \
+            --data-urlencode "fields=tag" \
+            | jq -er '[.items[].tag | select(test("^v?[0-9]+\\.[0-9]+\\.[0-9]+$"))][0]')
+
+          echo "result=${tag#v}" >> "$GITHUB_OUTPUT"
 
       - name: Get latest package version
         id: package
