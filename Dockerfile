@@ -12,14 +12,14 @@ ENV ARCH=$(ARCH)
 RUN mkdir -p /usr/src/app
 WORKDIR /usr/src/app
 
-ARG VERSION=0.40.3
+ARG VERSION=0.41.1
 LABEL org.opencontainers.image.version=${VERSION}
 ARG TARGETPLATFORM
 RUN if [ "$TARGETPLATFORM" = "linux/amd64" ]; then ARCH=amd64; \
   elif [ "$TARGETPLATFORM" = "linux/arm64" ]; then ARCH=arm64; \
   else ARCH=amd64; fi \
   && cd /usr/src/app \
-  && curl -L -O "https://github.com/pocketbase/pocketbase/releases/download/v${VERSION}/pocketbase_${VERSION}_linux_${ARCH}.zip" \
+  && curl -fsSL -O "https://ganigeorgiev.com/meta/pocketbase/pocketbase/download/v${VERSION}/pocketbase_${VERSION}_linux_${ARCH}.zip" \
   && unzip "pocketbase_${VERSION}_linux_${ARCH}.zip" \
   && rm "pocketbase_${VERSION}_linux_${ARCH}.zip"
 
