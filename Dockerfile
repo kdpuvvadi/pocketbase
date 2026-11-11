@@ -12,7 +12,7 @@ ENV ARCH=$(ARCH)
 RUN mkdir -p /usr/src/app
 WORKDIR /usr/src/app
 
-ARG VERSION=0.41.1
+ARG VERSION=0.42.2
 LABEL org.opencontainers.image.version=${VERSION}
 ARG TARGETPLATFORM
 RUN if [ "$TARGETPLATFORM" = "linux/amd64" ]; then ARCH=amd64; \
